@@ -27,7 +27,7 @@ const FlightCard = ({ flight }) => {
     };
 
     return (
-        <div className="bg-gray-100 p-4 m-3 rounded-lg max-w-80">
+        <div className="bg-gray-100 p-4 m-3 rounded-lg max-w-80 shadow-lg">
             <div className='flex justify-between'>
                 <h2 className="text-lg font-semibold mb-4">Flight Details</h2>
                 {/* Render copy icon if details are not copied */}

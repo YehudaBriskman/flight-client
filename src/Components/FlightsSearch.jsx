@@ -89,7 +89,7 @@ const FlightSearch = () => {
             </div>
             {/* Displaying flight search results */}
             {response &&
-                <div className='flex flex-row flex-wrap justify-around md:max-w-[90%] p-3 mx-auto'>
+                <div className='flex flex-row flex-wrap justify-center md:max-w-[90%] p-3 mx-auto'>
                     {response.map((flight, index) => (
                         <div key={index}>
                             <FlightCard flight={flight} />
