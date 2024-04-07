@@ -47,17 +47,20 @@ const FlightSearch = () => {
                     <div className="mb-2 pb-2 border-b-2 border-black shadow-md p-1 pt-3 rounded">
                         <div className='flex justify-between items-center p-2'>
                             <label className="ps-1 block text-gray-700 text-sm font-bold ">
-                                Search By -
+                                Search By
                             </label>
-                            <select
-                                style={{ border: "0px" }}
-                                onChange={(e) => setSearchType(e.target.value)} // Setting the search type based on user selection
-                                className="bg-transparent border border-black px-3 text-gray-700 focus:border-none focus:outline-none cursor-pointer font-bold"
-                            >
-                                <option value="ADI">ADI</option>
-                                <option value="Altitude">Altitude</option>
-                                <option value="His">His</option>
-                            </select>
+                            <div className='text-gray-700 font-bold'>
+                                when >
+                                <select
+                                    style={{ border: "0px" }}
+                                    onChange={(e) => setSearchType(e.target.value)} // Setting the search type based on user selection
+                                    className="bg-transparent border border-black pr-1 focus:border-none focus:outline-none cursor-pointer"
+                                >
+                                    <option value="ADI">ADI</option>
+                                    <option value="Altitude">Altitude</option>
+                                    <option value="His">His</option>
+                                </select>
+                            </div>
                         </div>
                         {/* Conditional rendering based on the selected search type */}
                         <input
