@@ -26,19 +26,48 @@ const FlightCard = ({ flight }) => {
         navigator.clipboard.writeText(flightDetails);
     };
 
+    const isWarningData = () => {
+        const altitude = parseInt(flight.Altitude);
+        const adi = parseInt(flight.ADI);
+
+        return (altitude >= 0 && altitude <= 300) || (altitude >= 2700 && altitude <= 3000) ||
+            (adi >= 0 && adi <= 10) || (adi >= 90 && adi <= 100);
+    };
+
+    const isWarningAltitude = () => {
+        const altitude = parseInt(flight.Altitude);
+        return (altitude >= 0 && altitude <= 300) || (altitude >= 2700 && altitude <= 3000);
+    };
+
+    const isWarningADI = () => {
+        const adi = parseInt(flight.ADI);
+        return (adi >= 0 && adi <= 10) || (adi >= 90 && adi <= 100);
+    };
+
+
+    // Conditionally apply class based on warning data
+    const mainDivClass = isWarningAltitude() || isWarningADI() ? 'p-4 m-3 rounded-lg max-w-80 shadow-lg shadow-red-700 bg-slate-100' : 'p-4 m-3 rounded-lg max-w-80 shadow-lg shadow-black bg-slate-100';
+    const AltitudeClass = isWarningAltitude() ? 'font-bold text-red-500' : 'font-semibold';
+    const ADIClass = isWarningADI() ? 'font-bold text-red-500' : 'font-semibold';
+
     return (
-        <div className="bg-gray-100 p-4 m-3 rounded-lg max-w-80 shadow-lg">
+        <div
+            className={mainDivClass}>
             <div className='flex justify-between'>
-                <h2 className="text-lg font-semibold mb-4">Flight Details</h2>
+                <h2 className="text-lg font-semibold mb-4 ">Flight Details</h2>
                 {/* Render copy icon if details are not copied */}
                 {!copied && <LuCopy className='cursor-pointer' onClick={copyHandler} />}
                 {/* Render checkmark icon if details are copied */}
                 {copied && <LuCopyCheck className='cursor-pointer' />}
             </div>
             {/* Display flight details */}
-            <p className="mb-2"><strong className="font-semibold">ADI:</strong> {flight.ADI}</p>
-            <p className="mb-2"><strong className="font-semibold">Altitude:</strong> {flight.Altitude}</p>
-            <p className="mb-2"><strong className="font-semibold">His:</strong> {flight.His}</p>
+            <p
+                style={{ marginBottom: '8px' }}
+                className={ADIClass}><strong className={ADIClass}>ADI:</strong> {flight.ADI}</p>
+            <p
+                style={{ marginBottom: '8px' }}
+                className={AltitudeClass}><strong className={AltitudeClass}>Altitude:</strong> {flight.Altitude}</p>
+            <p className="mb-2 font-semibold"><strong className="font-semibold">His:</strong> {flight.His}</p>
             <p className="mb-2"><strong className="font-semibold">Created At:</strong> {flight.createdAt}</p>
             <p className="mb-2"><strong className="font-semibold">Updated At:</strong> {flight.updatedAt}</p>
         </div>
