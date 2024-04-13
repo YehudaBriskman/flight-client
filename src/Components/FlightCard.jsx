@@ -45,8 +45,8 @@ const FlightCard = ({ flight }) => {
     return (
         <div
             className={mainDivClass}>
-            <div className='flex justify-between'>
-                <h2 className="text-lg font-semibold mb-4 ">Flight Details</h2>
+            <div className='flex justify-between items-center mb-4'>
+                <h2 className="text-lg font-semibold ">Flight Details</h2>
                 {/* Render copy icon if details are not copied */}
                 {!copied && <LuCopy className='cursor-pointer' onClick={copyHandler} />}
                 {/* Render checkmark icon if details are copied */}
