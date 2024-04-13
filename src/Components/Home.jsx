@@ -37,30 +37,59 @@ const Home = () => {
   }, []); // Fetch flights on component mount
 
   return (
-    <div className="flex justify-center items-center text-black h-full flex-col">
+    <div className="flex justify-center items-center text-black h-full flex-col pb-6">
 
       {/* Other content */}
-      <div className="text-center max-w-md mx-auto p-6 bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 rounded-md shadow-md">
+      <div className="text-center max-w-md mx-auto p-6 pb-3 bg-gradient-to-r from-slate-300 to-slate-500 rounded-md shadow-md">
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-4">Welcome back to Flights!</h1>
 
         {/* Dashboard section */}
-        <div className="text-center my-4 flex justify-around">
-          <div
-            onClick={() => setIsDash1Open(!isDash1Open)}
-            className="w-48 h-20 text-lg font-semibold p-3 m-2 bg-slate-100 border border-red-700 rounded-lg shadow-lg shadow-red-700 text-center cursor-pointer">
-            Warning Flights: {warningFlightsCount}
+
+        <div className="text-center my-4 mx-2 py-5 px-3 relative bg-gradient-to-r from-slate-200 to-slate-400 rounded-xl border border-black shadow-lg">
+          <div className="text-lg font-semibold text-gray-800 mb-4">
+            Total Flights Status:
           </div>
-          <div
-            onClick={() => setIsDash2Open(!isDash2Open)}
-            className="w-48 h-20 text-lg font-semibold p-3 m-2 bg-slate-100 border border-green-700 rounded-lg shadow-lg shadow-green-700 text-center cursor-pointer">
-            Ok Flights: {okFlightsCount}
+          <div className="flex items-center justify-center">
+            <div
+              className="w-52 h-52 rounded-full flex items-center justify-center border-black border shadow-2xl"
+              style={{
+                background: `conic-gradient( 
+                  #ff0000 ${((warningFlightsCount / flights.length) * 100).toFixed(2)}%, 
+                  #00ff00 ${((warningFlightsCount / flights.length) * 100).toFixed(2)}%
+                )`
+              }}
+            >
+              <div className="text-2xl font-semibold text-gray-800">
+                {100-((warningFlightsCount / flights.length) * 100).toFixed(2)}%
+              </div>
+            </div>
           </div>
-          {/* Add more dashboard elements if needed */}
+
+          <div className="text-center mt-4 flex justify-around">
+            <div
+              onClick={() => setIsDash1Open(!isDash1Open)}
+              className="w-48 h-20 text-lg font-semibold p-3 m-2 bg-slate-100 border border-red-700 rounded-lg shadow-lg shadow-red-700 text-center cursor-pointer flex items-center justify-center" // Added flex and justify-center classes
+            >
+              Warning Flights: {warningFlightsCount}
+            </div>
+            <div
+              onClick={() => setIsDash2Open(!isDash2Open)}
+              className="w-48 h-20 text-lg font-semibold p-3 m-2 bg-slate-100 border border-green-700 rounded-lg shadow-lg shadow-green-700 text-center cursor-pointer flex items-center justify-center" // Added flex and justify-center classes
+            >
+              Ok Flights: {okFlightsCount}
+            </div>
+            {/* Add more dashboard elements if needed */}
+          </div>
+
         </div>
+
         <div className="flex justify-center">
           <a href="/flightDetails" className="m-3 bg-gradient-to-r from-slate-400 via-gray-400 to-slate-400 shadow-lg text-black hover:scale-110 transition duration-300 ease-in-out font-bold py-2 px-5 rounded focus:outline-none focus:shadow-outline">Add More Flights</a>
         </div>
+
       </div>
+
+
 
       {/* Conditional rendering of FlightsDashForWarnOk */}
       {isDash1Open && <FlightsDashForWarnOk flights={flights.filter(flight => {
