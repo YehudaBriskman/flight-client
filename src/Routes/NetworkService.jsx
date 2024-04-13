@@ -18,7 +18,8 @@ export const URLS = {
     REGISTER_FLIGHT_URL: "flight/addFlight",
     FIND_BY_ALTITUDE: "flight/searchFlightByAltitude",
     FIND_BY_ADI: "flight/searchFlightByADI",
-    FIND_BY_HIS: "flight/searchFlightByHis"
+    FIND_BY_HIS: "flight/searchFlightByHis",
+    ALL_FLIGHTS: "flight/getAllFlights",
 }
 
 export const Network = {

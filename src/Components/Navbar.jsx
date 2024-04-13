@@ -8,7 +8,7 @@ const Navbar = () => {
                 <nav className='bg-slate-900 p-4 d-flex justify-content-end'>
                     <div className='p-4 d-flex ms-auto'>
                         <Link className='text-white mx-3' to="/">Home</Link>
-                        <Link className='text-white mx-3' to="/flightDetails">Flight</Link>
+                        <Link className='text-white mx-3' to="/flightDetails">Add Flight</Link>
                         <Link className='text-white mx-3' to="/searchFlights">Search Flights</Link>
                     </div>
                 </nav>

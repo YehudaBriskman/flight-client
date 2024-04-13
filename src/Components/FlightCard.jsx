@@ -26,14 +26,6 @@ const FlightCard = ({ flight }) => {
         navigator.clipboard.writeText(flightDetails);
     };
 
-    const isWarningData = () => {
-        const altitude = parseInt(flight.Altitude);
-        const adi = parseInt(flight.ADI);
-
-        return (altitude >= 0 && altitude <= 300) || (altitude >= 2700 && altitude <= 3000) ||
-            (adi >= 0 && adi <= 10) || (adi >= 90 && adi <= 100);
-    };
-
     const isWarningAltitude = () => {
         const altitude = parseInt(flight.Altitude);
         return (altitude >= 0 && altitude <= 300) || (altitude >= 2700 && altitude <= 3000);
