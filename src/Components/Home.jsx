@@ -14,20 +14,14 @@ const Home = () => {
 
   const getAllFlights = async () => {
     try {
-      // Fetch all flights data from the server
       const response = await Network.post(URLS.ALL_FLIGHTS);
       const allFlights = response.data;
-
-      // Filter warning flights based on altitude and ADI values
       const warnFlights = allFlights.filter(flight => (
         parseInt(flight.Altitude) <= 300 || parseInt(flight.Altitude) >= 2700 ||
         parseInt(flight.ADI) <= 10 || parseInt(flight.ADI) >= 90
       ));
-
-      // Filter OK flights by excluding warning flights
       const okFlights = allFlights.filter(flight => !warnFlights.includes(flight));
 
-      // Update state variables with fetched data and counts
       setWarnFlights(warnFlights);
       setFlights(allFlights);
       setOkFlights(okFlights);
@@ -38,10 +32,18 @@ const Home = () => {
     }
   };
 
-  // Fetch flights data when the component mounts
   useEffect(() => {
+    // Fetch flights initially
     getAllFlights();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+
+    // Fetch flights every 30 seconds
+    const interval = setInterval(() => {
+      getAllFlights();
+    }, 60000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, []); // Fetch flights on component mount
 
   return (
     <div className="flex justify-center items-center text-black h-full flex-col pb-6">
