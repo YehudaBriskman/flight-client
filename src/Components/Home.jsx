@@ -13,6 +13,17 @@ const Home = () => {
   const [warnFlights, setWarnFlights] = useState([]);
   const [isDash1Open, setIsDash1Open] = useState(false);
   const [isDash2Open, setIsDash2Open] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // בדיקה האם קיים משתמש ב-LocalStorage
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   const getUserIdFromLocalStorage = () => {
     const storedData = localStorage.getItem('user');
@@ -57,6 +68,17 @@ const Home = () => {
 
     return () => clearInterval(interval);
   }, [user]);
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex justify-center items-center text-black h-full flex-col pb-6">
+        <div className="text-center max-w-md mx-auto p-6 pb-3 bg-gradient-to-r from-slate-300 to-slate-500 rounded-md shadow-md">
+          <h1 className="text-3xl font-semibold text-center text-gray-800 mb-4">Welcome to our application!</h1>
+          <p className="text-lg font-semibold text-center text-gray-800 mb-4">For starting, please log-in.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center text-black h-full flex-col pb-6">

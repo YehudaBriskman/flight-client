@@ -5,6 +5,7 @@ import { getAxiosStatus } from '../utils/utils';
 import { URLS, Network } from '../Routes/NetworkService';
 import FlightCard from './FlightCard';
 import userContext from './context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 const FlightSearch = () => {
     const { user } = useContext(userContext);
@@ -30,6 +31,8 @@ const FlightSearch = () => {
         reValidateMode: "onChange"
     });
 
+    const nav = useNavigate();
+
     const search = async (data) => {
         const searchObject = {
             ADI: { url: URLS.FIND_BY_ADI, body: { ADI: data.ADI } },
@@ -41,6 +44,10 @@ const FlightSearch = () => {
         let userId = getUserIdFromLocalStorage();
         if (!userId && user) {
             userId = user._id;
+        }
+        if (!user && !getUserIdFromLocalStorage()) {
+            nav("/nouser");
+            return null;
         }
         const newData = {
             ...requestData.body,

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
-import Loading from '../shared/Loading'
-import { useForm } from 'react-hook-form'
-import flightContext from './context/flightContext'
-import { useNavigate } from 'react-router-dom'
-import { Network, URLS } from '../Routes/NetworkService'
-import { getAxiosStatus } from '../utils/utils'
-import userContext from './context/userContext'
+import React, { useContext } from 'react';
+import Loading from '../shared/Loading';
+import { useForm } from 'react-hook-form';
+import flightContext from './context/flightContext';
+import { useNavigate } from 'react-router-dom';
+import { Network, URLS } from '../Routes/NetworkService';
+import { getAxiosStatus } from '../utils/utils';
+import userContext from './context/userContext';
 
 const FlightDetails = () => {
     const { user } = useContext(userContext);
@@ -50,6 +50,11 @@ const FlightDetails = () => {
             setError("error", { message: "network error" }); // Set error for network issues
         }
     };
+
+    if (!user && !getUserIdFromLocalStorage()) {
+        nav("/nouser");
+        return null;
+    }
 
     return (
         <div className='pb-5'>
@@ -124,8 +129,7 @@ const FlightDetails = () => {
                 </form>
             </div>
         </div>
-    )
+    );
+};
 
-}
-
-export default FlightDetails
+export default FlightDetails;
