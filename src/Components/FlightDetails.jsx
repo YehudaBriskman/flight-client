@@ -5,30 +5,51 @@ import flightContext from './context/flightContext'
 import { useNavigate } from 'react-router-dom'
 import { Network, URLS } from '../Routes/NetworkService'
 import { getAxiosStatus } from '../utils/utils'
+import userContext from './context/userContext'
 
 const FlightDetails = () => {
-    const { flightData, setFlightData } = useContext(flightContext)
+    const { user } = useContext(userContext);
+    const { flightData, setFlightData } = useContext(flightContext);
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
         mode: "onSubmit",
         reValidateMode: "onChange"
     });
 
-    const nav = useNavigate()
+    const nav = useNavigate();
+
+    const getUserIdFromLocalStorage = () => {
+        const storedData = localStorage.getItem('user');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            return parsedData._id;
+        }
+        return null;
+    };
+
     const signup = async (data) => {
-        const detailsUpdate = data
+        if (user === null) {
+            console.log("User is null");
+        }
+        if (getUserIdFromLocalStorage() === null) {
+            console.log("UserId from localStorage is null");
+        }
+        let userId = getUserIdFromLocalStorage();
+        if (!userId && user) {
+            userId = user._id;
+        }
+        data = { ...data, UserId: userId };
+        const detailsUpdate = data;
         console.log("update: ", detailsUpdate);
-        setFlightData({ ...flightData, ...detailsUpdate }) // Update flyData with the new details
+        setFlightData({ ...flightData, ...detailsUpdate }); // Update flyData with the new details
         localStorage.setItem("LS-FlightData", JSON.stringify(data)); // Store the fly data in local storage
-        const storedFlightData = JSON.parse(localStorage.getItem('LS-FlightData')); // Retrieve the stored fly data from local storage and parse it
-        console.log("LSFlyData updated: ", storedFlightData);
         try {
-            await Network.post(URLS.REGISTER_FLIGHT_URL, data) // Send data to server for registration
-            nav("/visualFlight") // Navigate to visualFly page upon successful registration
+            await Network.post(URLS.REGISTER_FLIGHT_URL, data); // Send data to server for registration
+            nav("/visualFlight"); // Navigate to visualFly page upon successful registration
         } catch (error) {
             console.log(getAxiosStatus(error) + ": ", error);
-            setError("error", { message: "network error" }) // Set error for network issues
+            setError("error", { message: "network error" }); // Set error for network issues
         }
-    }
+    };
 
     return (
         <div className='pb-5'>

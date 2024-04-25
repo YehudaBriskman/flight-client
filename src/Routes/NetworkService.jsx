@@ -15,6 +15,10 @@ function post(url, data) {
 };
 
 export const URLS = {
+    REGISTER:"user/register",
+    LOGIN: "user/login",
+    LOGOUT: "user/logout",
+    GET_USER: "user/user",
     REGISTER_FLIGHT_URL: "flight/addFlight",
     FIND_BY_ALTITUDE: "flight/searchFlightByAltitude",
     FIND_BY_ADI: "flight/searchFlightByADI",

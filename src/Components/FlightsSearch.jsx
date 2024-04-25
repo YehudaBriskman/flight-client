@@ -1,39 +1,58 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Loading from '../shared/Loading';
 import { useForm } from 'react-hook-form';
 import { getAxiosStatus } from '../utils/utils';
 import { URLS, Network } from '../Routes/NetworkService';
 import FlightCard from './FlightCard';
+import userContext from './context/userContext';
 
 const FlightSearch = () => {
-    const [response, setResponse] = useState(null); // State for storing flight search results
-    const [searchType, setSearchType] = useState("ADI"); // State for storing the type of search selected by the user
+    const { user } = useContext(userContext);
+    const [response, setResponse] = useState(null);
+    const [searchType, setSearchType] = useState("ADI");
     const maxValue = {
         ADI: 100,
         His: 360,
         Altitude: 3000
-    }
+    };
 
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({ // Setting up form handling using react-hook-form
+    const getUserIdFromLocalStorage = () => {
+        const storedData = localStorage.getItem('user');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            return parsedData._id;
+        }
+        return null;
+    };
+
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm({
         mode: "onSubmit",
         reValidateMode: "onChange"
     });
 
-    const search = async (data) => { // Function to handle flight search based on user input
-
+    const search = async (data) => {
         const searchObject = {
             ADI: { url: URLS.FIND_BY_ADI, body: { ADI: data.ADI } },
             His: { url: URLS.FIND_BY_HIS, body: { His: data.His } },
             Altitude: { url: URLS.FIND_BY_ALTITUDE, body: { Altitude: data.Altitude } }
+        };
+        const currentSearchType = searchType || 'ADI';
+        const requestData = searchObject[currentSearchType];
+        let userId = getUserIdFromLocalStorage();
+        if (!userId && user) {
+            userId = user._id;
         }
-        const currentData = searchObject[searchType || 'ADI'];
-
+        const newData = {
+            ...requestData.body,
+            UserId: userId
+        };
+        console.log(newData);
         try {
-            const response = await Network.post(currentData.url, currentData.body)
-            setResponse((response).data)
+            const response = await Network.post(requestData.url, newData);
+            setResponse(response.data);
         } catch (error) {
-            console.error(getAxiosStatus(error) + ": ", error); // Handling Axios errors and logging them
-            setError("error", { message: "network error" }); // Setting an error message in case of network issues
+            console.error(getAxiosStatus(error) + ": ", error);
+            setError("error", { message: "network error" });
         }
     };
 

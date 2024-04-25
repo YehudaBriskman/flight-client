@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@shoelace-style/shoelace": "^2.15.0",
     "axios": "^1.6.5",
+    "email-validator": "^2.0.4",
     "joi": "^17.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

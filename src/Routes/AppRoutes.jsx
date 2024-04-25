@@ -5,6 +5,8 @@ import Navbar from '../Components/Navbar'
 import FlightSearch from '../Components/FlightsSearch'
 import FlightDetails from '../Components/FlightDetails'
 import VisualFlight from '../Components/VisualFlight'
+import SignUp from '../Components/SignUp'
+import Login from '../Components/Login'
 
 
 // Define the AppRoutes component
@@ -21,6 +23,8 @@ const AppRoutes = () => {
                 {/* Define route for visual fly page */}
                 <Route path='/visualFlight' element={<VisualFlight/>} />
                 {/* Define route for 404 not found page */}
+                <Route path='/signup' element={<SignUp/>}/>
+                <Route path='/login' element={<Login/>}/>
                 <Route path='*' element={<h1 className='text-4xl'>404 not found</h1>} />
             </Route>
         </Routes>

@@ -10,6 +10,8 @@ const Navbar = () => {
                         <Link className='text-white mx-3' to="/">Home</Link>
                         <Link className='text-white mx-3' to="/flightDetails">Add Flight</Link>
                         <Link className='text-white mx-3' to="/searchFlights">Search Flights</Link>
+                        <Link className='text-white mx-3' to="/login">Log-in</Link>
+                        <Link className='text-white mx-3' to="/signup">Sign up</Link>
                     </div>
                 </nav>
             </header>
